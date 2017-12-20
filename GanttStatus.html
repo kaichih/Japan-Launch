@@ -1,0 +1,60 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('string', 'Resource');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['infrastructure', 'Infrastructure (Luck Jack / Jorge)', null, new Date(2017, 10, 20), new Date(2017, 11, 22), null,  80,  null],
+        ['tools', 'Data Tools (Cristina Esteban)', null, new Date(2017, 10, 13), new Date(2018, 0, 31), null, 42, null], 
+        ['service', 'Customer Service (Lucy Jack)', null, new Date(2017, 10, 20), new Date(2018, 1, 7), null, 33, null], 
+        ['delivery', 'Service Delivery (Silvia)', null, new Date(2017, 10, 20), new Date(2017, 11, 15), null, 100, null], 
+        ['class', 'CLASS (Ralf Bahl)', null, new Date(2017, 10, 13), new Date(2017, 10, 24), null, 100, null], 
+        ['localization', 'Localization (Vinson Jia / Jiang-Tao)', null, new Date(2018, 0, 31), new Date(2018, 2, 7), null, 0, 'tools'], 
+        ['vin', 'VIN (Alvaro Bello)', null, new Date(2017, 10, 24), new Date(2018, 0, 5), null, 50, null], 
+        ['platform', 'Audanet Platform and Qapter (Josh Cheng)', null, new Date(2017, 11, 4), new Date(2018, 0, 31), null, 22, null], 
+        ['acceptance', 'Country Acceptance Test (Andrew Lee)', null, new Date(2018, 2, 5), new Date(2018, 2, 21), null, 0, 'infrastructure, localization, service, delivery, class, vin, platform'], 
+        ['milestone1', 'Milestone: Ready on SG-INT1', 'milestone', new Date(2018, 1, 27), new Date(2018, 1, 28), null, 0, null], 
+        ['milestone2', 'Milestone: Ready on SG-PROD', 'milestone', new Date(2018, 2, 20), new Date(2018, 2, 21), null, 0, null], 
+        ['xmas', 'Xmas and New Year', 'holiday', new Date(2017, 11, 23), new Date(2018, 0, 2), null, 0, null], 
+        ['cny', 'Chinese New Year', 'holiday', new Date(2018, 1, 15), new Date(2018, 1, 20), null, 0, null]
+      ]);
+
+      var options = {
+        height: 700, 
+        gantt: {
+            criticalPathEnabled: true,
+            criticalPathStyle: {
+              stroke: '#e64a19',
+              strokeWidth: 5
+              }
+          }
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <div id="chart_div"></div>
+</body>
+</html>
